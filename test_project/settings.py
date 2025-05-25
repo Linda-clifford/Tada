@@ -25,12 +25,14 @@ SECRET_KEY = 'django-insecure-!gx_0$86*jr$j-dxh++-jtoc5y14jm#6ukx5(7g$ns8pfy7r%(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.59.238', 'localhost', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.sitemaps',
+    'blog.apps.BlogConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,10 +53,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'test_project.urls'
 
+import os
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,15 +74,21 @@ TEMPLATES = [
 WSGI_APPLICATION = 'test_project.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'tada',
+        'USER': 'steve',
+        'PASSWORD': 'Com00037',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
 
 
 # Password validation
@@ -116,6 +126,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+NEWS_API_KEY = 'adc9665fc7ba4da3bd78346e150e740b'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

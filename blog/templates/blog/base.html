@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+<!-- Mirrored from themes.ad-theme.com/html/tada/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 29 May 2024 12:24:04 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Tada{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block meta_description %}
+    <meta name="description" content="Welcome to Tada – Latest news and blog articles.">
+    {% endblock %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+    <!-- STYLES -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/slippry.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <!-- GOOGLE FONTS -->
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic' rel='stylesheet'
+        type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,400italic,700,700italic' rel='stylesheet'
+        type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!--******************************************************************************************************************************************
+    ****************************************************************** PRELOADER ********************************************************************
+    *******************************************************************************************************************************************-->
+    <style>
+        @media (max-width: 768px) {
+            .desktop-only {
+                display: none;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-only {
+                display: none;
+                font-size: 15px;
+            }
+        }
+    </style>
+
+
+    <div id="preloader-container">
+        <div id="preloader-wrap">
+            <div id="preloader"></div>
+        </div>
+    </div>
+
+    <!--******************************************************************************************************************************************
+    ****************************************************************** HEADER ********************************************************************
+    *******************************************************************************************************************************************-->
+
+    <header class="tada-container">
+
+        <!-- MENU DESKTOP -->
+
+
+        <nav class="menu-desktop menu-sticky">
+
+            <ul class="tada-menu">
+                <li><a href="{% url 'home' %}" class="{% if active_nav == 'latest' %}active{% endif %}">Latest </a>
+                </li>
+                <li><a href="{% url 'source_articles' 'techcrunch' %}"
+                        class="{% if active_nav == 'techcrunch' %}active{% endif %}">TechCrunch </a>
+                </li>
+                <li><a href="{% url 'source_articles' source='apple' %}"
+                        class="{% if active_nav == 'apple' %}active{% endif %}">Apple</a></li>
+                <li><a href="{% url 'category_articles' category='AI' %}"
+                        class="{% if active_nav == 'AI' %}active{% endif %}">AI</a></li>
+            </ul>
+
+        </nav>
+
+        <!-- MENU MOBILE -->
+
+        <div class="menu-responsive-container">
+            <div class="open-menu-responsive">|||</div>
+            <div class="close-menu-responsive">|</div>
+            <div class="menu-responsive">
+                <ul class="tada-menu">
+                    <li><a href="{% url 'home' %}" class="{% if active_nav == 'latest' %}active{% endif %}">Latest</a>
+                    </li>
+                    <li><a href="{% url 'source_articles' 'techcrunch' %}"
+                            class="{% if active_nav == 'techcrunch' %}active{% endif %}">TechCrunch </a>
+                    </li>
+                    <li><a href="{% url 'source_articles' source='apple' %}"
+                            class="{% if active_nav == 'apple' %}active{% endif %}">Apple</a></li>
+                    <li><a href="{% url 'category_articles' category='AI' %}"
+                            class="{% if active_nav == 'AI' %}active{% endif %}">AI</a></li>
+                </ul>
+
+                <!-- Inside .menu-responsive -->
+                <div class="tada-search mobile-only mt-4 px-3">
+                    <form method="get" action="{% url 'search_articles' %}">
+                        <div class="form-group-search">
+                            <input type="search" name="q" class="search-field" placeholder="Search and hit enter..."
+                                required>
+                            <button type="submit" class="search-btn"><i class="icon-search4"></i></button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div> <!-- # menu responsive container -->
+
+
+        <!-- SEARCH -->
+
+        <!-- SEARCH (Desktop only) -->
+        <div class="tada-search desktop-only">
+            <form method="get" action="{% url 'search_articles' %}">
+                <div class="form-group-search">
+                    <input type="search" name="q" class="search-field" placeholder="Search and hit enter..." required>
+                    <button type="submit" class="search-btn"><i class="icon-search4"></i></button>
+                </div>
+            </form>
+        </div>
+
+        <!-- SLIDER -->
+        {% block slider %}
+        {% endblock %}
+
+        <!-- END SLIDER -->
+
+
+    </header><!--END HEADER-->
+
+    <!--******************************************************************************************************************************************
+    ****************************************************************** SECTION *******************************************************************
+    *******************************************************************************************************************************************-->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+    <!--******************************************************************************************************************************************
+    ****************************************************************** FOOTER ********************************************************************
+    *******************************************************************************************************************************************-->
+
+    <footer class="tada-container">
+
+
+
+        <!-- FOOTER BOTTOM -->
+
+        <div class="footer-bottom">
+            <span class="copyright">
+                Created by <a href="#">Tada</a> © 2025. All Rights Reserved | 
+                <a href="{% url 'privacy_policy' %}" class="text-blue-500 hover:underline">Privacy Policy</a>
+            </span>            
+            <span class="backtotop">TOP <i class="icon-arrow-up7"></i></span>
+            <div class="clearfix"></div>
+        </div>
+
+    </footer>
+
+    <!--******************************************************************************************************************************************
+    ****************************************************************** SCRIPT ********************************************************************
+    *******************************************************************************************************************************************-->
+
+
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'js/slippry.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+</body>
+
+<!-- Mirrored from themes.ad-theme.com/html/tada/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 29 May 2024 12:24:11 GMT -->
+
+</html>

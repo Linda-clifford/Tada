@@ -1,0 +1,235 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block title %}{{ article.title }} | Tada{% endblock %}
+{% block meta_description %}
+{% load custom_filters %}
+<meta name="description" content="{{ article.content|truncatewords:30 }}">
+{% endblock %}
+
+
+<style>
+    .comment-form {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background-color: #f9f9f9;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .comment-form h3 {
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .field-name {
+        display: block;
+        margin-top: 1rem;
+        margin-bottom: 0.3rem;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: #555;
+    }
+
+    .name,
+    .email,
+    .message {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.3s;
+    }
+
+    .name:focus,
+    .email:focus,
+    .message:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    button[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<body>
+
+    <!--******************************************************************************************************************************************
+    ****************************************************************** SECTION *******************************************************************
+    *******************************************************************************************************************************************-->
+    {% block content %}
+    <section class="tada-container content-posts post post-full-width">
+
+        <!-- *** CONTENT *** -->
+
+        <div class="content col-xs-12">
+            <!-- ARTICLE 1 -->
+            <article>
+
+                <div class="post-image">
+                    <img src="{{ article.image_url }}" alt="{{article.title}}">
+                </div>
+
+                <div class="category">
+                    <a>{{ article|guess_category }}</a>
+                </div>
+
+                <div class="post-text">
+                    <span class="date">{{ article.published_at|date:"F j, Y, g:i a" }}</span>
+                    <h2>{{ article.title }}</h2>
+                </div>
+
+                <div class="post-text text-content">
+                    <div class="post-by">Post By <a>{{ article.author }}</a></div>
+                    <div class="text">
+                        {{ article.content|safe }}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+        </div>
+        </article>
+        </div>
+
+
+        <div class="clearfix"></div>
+
+
+        <div class="clearfix"></div>
+
+
+        <div class="related-posts">
+            <h2>Related Article</h2>
+            <div class="related-item-container">
+                {% for related in related_articles %}
+                <div class="related-item">
+                    <div class="related-image">
+                        <img src="{{ related.image_url|default:'https://via.placeholder.com/400x200?text=No+Image' }}">
+
+                    </div>
+                    <div class="related-text">
+                        <span class="related-date">{{ related.published_at|date:"d M Y" }}</span>
+                        <span class="related-title"><a href="{% url 'article_detail' slug=related.slug %}">{{related.title|truncatewords:8 }}</a></span>
+                    </div>
+                    <div class="related-author">
+                        Post by <a href="{% url 'article_detail' slug=related.slug %}">{{ related.author }}</a>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No related articles found.</p>
+                {% endfor %}
+
+                <div class="clearfix"></div>
+
+            </div>
+        </div>
+
+        <div class="comments">
+            <h3>{{ comments.count }} Comment{{ comments.count|pluralize }}</h3>
+
+            {% for comment in comments %}
+            <div class="comments-list" id="comment-{{ comment.id }}">
+                <div class="main-comment">
+                    <div class="comment-image-author">
+                        <img src="{% static 'img/Profile_avatar_placeholder_large.png' %}">
+                    </div>
+                    <div class="comment-info">
+                        <div class="comment-name-date">
+                            <span class="comment-name">{{ comment.name }}</span>
+                            <span class="comment-date">{{ comment.created_at|date:"F j, Y" }}</span>
+                            <div class="clearfix"></div>
+                        </div>
+                        <span class="comment-description">
+                            {{ comment.body|linebreaks }}
+                            <a href="#" class="reply-btn" data-comment-id="{{ comment.id }}">
+                                <i class="icon-arrow-right2"></i> Reply
+                            </a>
+                        </span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <!-- Replies -->
+                {% for reply in comment.replies.all %}
+                <div class="reply-comment" id="comment-{{ reply.id }}">
+                    <span class="reply-line"></span>
+                    <div class="comment-image-author">
+                        <img src="{% static 'img/Profile_avatar_placeholder_large.png' %}">
+                    </div>
+                    <div class="comment-info">
+                        <div class="comment-name-date">
+                            <span class="comment-name">{{ reply.name }}</span>
+                            <span class="comment-date">{{ reply.created_at|date:"F j, Y" }}</span>
+                            <div class="clearfix"></div>
+                        </div>
+                        <span class="comment-description">
+                            <strong>Replying to @{{ reply.parent.name }}</strong><br>
+                            {{ reply.body|linebreaks }}
+                        </span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                {% endfor %}
+
+
+            </div>
+            {% empty %}
+            <p class="text-center">No comments yet. Be the first to comment!</p>
+            {% endfor %}
+        </div>
+
+
+        <!-- Comment Form -->
+        <div class="comment-form">
+            <h3>Leave a Reply</h3>
+            <form method="post" id="replyForm">
+                {% csrf_token %}
+                <span class="field-name">Your Name (required)</span>
+                {{ form.name }}
+                <span class="field-name">Your Email (required)</span>
+                {{ form.email }}
+                <span class="field-name">Your Message</span>
+                {{ form.body }}
+                <input type="hidden" name="parent" id="parentInput">
+                <button type="submit">Send Comment</button>
+            </form>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const replyButtons = document.querySelectorAll('.reply-btn');
+                const parentInput = document.getElementById('parentInput');
+                const messagePlaceholder = document.querySelector('textarea[name="body"]');
+                const commentForm = document.getElementById('replyForm');
+
+                replyButtons.forEach(button => {
+                    button.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const commentId = this.dataset.commentId;
+                        parentInput.value = commentId;
+                        messagePlaceholder.placeholder = "Your reply to " + this.closest('.comment-info').querySelector('.comment-name').innerText;
+                        messagePlaceholder.focus();
+
+                        commentForm.scrollIntoView({ behavior: 'smooth' });
+                    });
+                });
+            });
+        </script>
+
+    </section>
+    {% endblock %}
+
+</body>

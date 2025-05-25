@@ -1,0 +1,167 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block title %}Tada | Latest news and blog articles{% endblock %}
+{% block meta_description %}
+<meta name="description" content="Explore the latest posts on tech, tips, and trends from Tada.">
+{% endblock %}
+
+
+<body>
+
+    {% block content %}
+    <section class="tada-container content-posts">
+
+        <!-- *** CONTENT *** -->
+
+        <div class="content col-xs-8">
+
+            <!-- ARTICLE 1 -->
+            {% for article in page_obj %}
+            <article>
+                {% if article.image_url %}
+                <div class="{{article.title}}">
+                    <img src="{{article.image_url}}">
+
+                </div>
+                {% endif %}
+                <div class="post-text">
+                    <span class="date">{{ article.published_at }}</span>
+                    <h2><a href="{% url 'article_detail' slug=article.slug %}">{{ article.title }}</a></h2>
+                    <p class="text">{{ article.description }}
+                        <a href="{% url 'article_detail' slug=article.slug %}"><i class="icon-arrow-right2"></i></a>
+                    </p>
+                </div>
+                <div class="post-info">
+                    <div class="post-by">Post By <a
+                            href="{% url 'article_detail' slug=article.slug %}">{{article.author}}</a></div>
+                    <div class="extra-info">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}"
+                            target="_blank" rel="noopener">
+                            <i class="icon-facebook5"></i>
+                        </a>
+
+                        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ article.title|urlencode }}"
+                            target="_blank" rel="noopener">
+                            <i class="icon-twitter4"></i>
+                        </a>
+
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri|urlencode }}"
+                            target="_blank" rel="noopener">
+                            <i class="icon-linkedin2"></i>
+                        </a>
+
+                        <a href="{% url 'article_detail' slug=article.slug %}#comments">
+                            {{ article.comments.count }} <i class="icon-bubble2"></i>
+                        </a>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </article>
+            {% endfor %}
+
+
+            <div class="navigation">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="prev">
+                    <i class="icon-arrow-left8"></i> Previous Posts
+                </a>
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="next">
+                    Next Posts <i class="icon-arrow-right8"></i>
+                </a>
+                {% endif %}
+                <div class="clearfix"></div>
+            </div>
+
+
+        </div>
+
+        <!-- *** SIDEBAR *** -->
+
+        <div class="sidebar col-xs-4">
+
+            <!-- ABOUT ME -->
+
+            <div class="widget about-me">
+                <div class="ab-image">
+                    <img src="{% static 'img/about-me.jpg' %}" alt="about me">
+                    <div class="ab-title">About Me</div>
+                </div>
+                <div class="ad-text">
+                    <p>Curated stories, thoughtful ideas, and inspiration for curious minds. This blog explores everyday
+                        moments, creativity, and the beauty of slowing down to think, feel, and write.</p>
+                    <span class="signing"><img src="{% static 'img/signing.png' %}" alt="signing"></span>
+                </div>
+            </div>
+
+            <!-- LATEST POSTS -->
+
+            <div class="widget latest-posts">
+                <h3 class="widget-title">
+                    Latest Posts
+                </h3>
+
+                <div class="posts-container">
+
+                    {% for post in latest_posts %}
+                    <div class="item">
+                        <img src="{{ post.image_url }}" alt="post 2" class="post-image">
+                        <br>
+                        <div class="info-post">
+                            <h5><a href="{% url 'article_detail' slug=post.slug %}">{{ post.title|truncatewords:5 }}</a>
+                            </h5>
+                            <span class="date">{{ post.published_at}}</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <!-- NEWSLETTER -->
+                              
+            <div class="widget newsletter">
+            	<h3 class="widget-title">
+                	Contact Us
+                </h3>
+            	<div class="newsletter-container">
+					<h4 style="font-weight: 400; font-size: medium;">Have a feature idea?</h4>
+                    <p style="font-weight: 600;">We'd love to hear it! Email us at  
+                        <a href="mailto:tadablog@gmail.com" class="text-blue-600 hover:underline">tadablog@gmail.com</a>.
+                    </p>
+                </div>
+            	<div class="clearfix"></div>
+            </div>  
+
+            <!-- TAGS -->
+
+            <div class="widget tags">
+                <h3 class="widget-title">
+                    Tags
+                </h3>
+                <div class="tags-container">
+                    {% for tag in tags %}
+                    <a href="{% url 'tag_detail' slug=tag.slug %}">{{ tag.name }}</a>
+                    {% empty %}
+                    <p>No tags available.</p>
+                    {% endfor %}
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+
+        </div> <!-- #SIDEBAR -->
+
+        <div class="clearfix"></div>
+
+    </section>
+    {% endblock %}
+
+</body>
