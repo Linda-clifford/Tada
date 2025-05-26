@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: tadapost
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn test_project.wsgi
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: test_project.settings
