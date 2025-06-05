@@ -80,8 +80,12 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-database_url = os.environ.get("DATABASES_URL")
-DATABASES['default'] = dj_database_url.parse("database_url")
+# database_url = os.environ.get("DATABASES_URL")
+# DATABASES['default'] = dj_database_url.parse("database_url")
+
+DATABASES = {
+    'default': dj_database_url.config(default=os.environ.get("DATABASE_URL"))
+}
 
 
 
