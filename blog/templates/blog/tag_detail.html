@@ -3,32 +3,32 @@
 {% load custom_filters %}
 {% block title %}Tada | {{ tag.name }} Articles{% endblock %}
 {% block meta_description %}
-<meta name="description"
-    content="Latest {{ tag.name }} news articles and updates. Stay informed with our curated selection of {{ tag.name }} stories.">
+<meta name="description" content="Latest {{ tag.name }} news articles and updates. Stay informed with our curated selection of {{ tag.name }} stories.">
 {% endblock %}
 
 
-{% block content %}
+<body>
 
-<section style="flex: 1;" class="tada-container content-posts blog-2-columns">
+    {% block content %}
+    <section class="tada-container content-posts">
 
-    <div class="page-header" style="text-align: center; margin: 40px 0;">
-        <strong>
-            <h1 style="color: black; font-size: 36px;">{{ tag.name }}</h1>
-        <h4 style="color: #000; font-size: 18px;">Showing all articles tagged with "{{ tag.name }}"</h4>
-        </strong>
-    </div>
+        <div class="page-header" style="text-align: center; margin: 40px 0;">
+            <h1 style="color: black;">{{tag.name}}</h1>
+            <h4 style="color: #000;">Showing all articles tagged with "{{ tag.name }}"</h4>
+        </div>
 
+        <!-- *** CONTENT *** -->
 
-    <div class="row">
         <div class="content col-xs-10" style="margin: 0 auto; float: none; text-align: center;">
 
-            {% if page_obj %}
+            <!-- ARTICLE 1 -->
+
             {% for article in page_obj %}
             <article>
                 {% if article.image_url %}
-                <div class="post-image">
-                    <img src="{{ article.image_url }}">
+                <div class="{{article.title}}">
+                    <img src="{{article.image_url}}" style="border-radius:10px 10px 0 0; border: 1px">
+
                 </div>
                 {% endif %}
                 <div class="post-text">
@@ -39,7 +39,8 @@
                     </p>
                 </div>
                 <div class="post-info">
-                    <div class="post-by">Post By <a href="{% url 'article_detail' slug=article.slug %}">{{article.author }}</a></div>
+                    <div class="post-by">Post By <a
+                            href="{% url 'article_detail' slug=article.slug %}">{{article.author}}</a></div>
                     <div class="extra-info">
                         <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}"
                             target="_blank" rel="noopener">
@@ -60,32 +61,37 @@
                             {{ article.comments.count }} <i class="icon-bubble2"></i>
                         </a>
                     </div>
+
                     <div class="clearfix"></div>
                 </div>
             </article>
             {% endfor %}
-            {% else %}
-            <p class="text-center" style="font-size: 18px; color: #888;">No articles found under this tag yet.</p>
-            {% endif %}
 
             <div class="navigation">
                 {% if page_obj.has_previous %}
                 <a href="?page={{ page_obj.previous_page_number }}" class="prev">
-                    <i class="icon-arrow-left8"></i> Previous Posts
+                    <i class="icon-arrow-left8"></i> Previous
                 </a>
                 {% endif %}
 
                 {% if page_obj.has_next %}
                 <a href="?page={{ page_obj.next_page_number }}" class="next">
-                    Next Posts <i class="icon-arrow-right8"></i>
+                    Next <i class="icon-arrow-right8"></i>
                 </a>
                 {% endif %}
                 <div class="clearfix"></div>
             </div>
-
         </div>
-    </div>
-    <div class="clearfix"></div>
-</section>
-{% endblock %}
+
+        <!-- *** SIDEBAR *** -->
+
+        <div class="clearfix"></div>
+
+    </section>
+    {% endblock %}
+
+</body>
+
+
+
 

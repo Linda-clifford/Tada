@@ -15,7 +15,7 @@ def home(request):
     articles_list = Article.objects.filter(status='published').order_by('-published_at')
 
     tags = Tag.objects.all()
-    paginator = Paginator(articles_list, 10)  # Show 10 articles per page
+    paginator = Paginator(articles_list, 8)  # Show 10 articles per page
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -95,9 +95,16 @@ def article_detail(request, slug):
 
 def source_articles(request, source):
     articles = Article.objects.filter(url__icontains=source).order_by('-published_at')
-    paginator = Paginator(articles, 8)  
+
+    tags = Tag.objects.all()
+
+    paginator = Paginator(articles, 5)  
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
+
+
+    featured_articles = list(Article.objects.filter(featured=True))
+    latest_posts = sample(featured_articles, min(len(featured_articles),7))
 
 
     return render(request, "blog/source_articles.html", {
@@ -105,6 +112,8 @@ def source_articles(request, source):
         "source": source,
         "active_nav": source,
         "request": request,
+        "tags": tags,
+        "latest_posts": latest_posts,
     })
 
 
@@ -115,15 +124,22 @@ def category_articles(request, category):
         Q(title__icontains=category) | Q(description__icontains=category)
     ).order_by('-published_at')
 
-    paginator = Paginator(articles, 8)
+    tags = Tag.objects.all()
+
+    paginator = Paginator(articles, 5)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
+
+    featured_articles = list(Article.objects.filter(featured=True))
+    latest_posts = sample(featured_articles, min(len(featured_articles),7)) 
 
     return render(request, "blog/category_articles.html", {
         "page_obj": page_obj,
         "category": category,
         "active_nav": category,
         "request": request,
+        "tags": tags,
+        "latest_posts": latest_posts,
     })
 
 def tag_detail(request, slug):

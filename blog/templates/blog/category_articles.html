@@ -3,107 +3,92 @@
 {% load custom_filters %}
 {% block title %}Tada | {{ category|title }} Articles{% endblock %}
 {% block meta_description %}
-<meta name="description" content="Explore the latest articles in {{ category|title }}. Stay updated with trends and news in the {{ category|title }} world.">
+<meta name="description"
+    content="Explore the latest articles in {{ category|title }}. Stay updated with trends and news in the {{ category|title }} world.">
 {% endblock %}
 
 
-{% block content %}
+<body>
 
-<section class="tada-container content-posts blog-2-columns">
+    {% block content %}
+    <section class="tada-container content-posts">
 
-    <div class="page-header" style="text-align: center; margin: 40px 0;">
-        <h1 style="color: black;">{{ category|title }} Articles</h1>
-        <h4 style="color: #000;">Latest updates and stories related to {{ category|title }}</h4>
-    </div>
+        <div class="page-header" style="text-align: center; margin: 40px 0;">
+            <h1 style="color: black;">{{ category|title }} Articles</h1>
+            <h4 style="color: #000;">Latest updates and stories related to {{ category|title }}</h4>
+        </div>
 
-    <div class="row">
+        <!-- *** CONTENT *** -->
+
         <div class="content col-xs-10" style="margin: 0 auto; float: none; text-align: center;">
 
-            {% if page_obj %}
-                {% for article in page_obj %}
-                    <article>
-                        {% if article.image_url %}
-                            <div class="{{ article.title }}">
-                                <img src="{{ article.image_url }}">
-                            </div>
-                        {% endif %}
-                        <div class="post-text">
-                            <span class="date">{{ article.published_at }}</span>
-                            <h2><a href="{% url 'article_detail' slug=article.slug %}">{{ article.title }}</a></h2>
-                            <p class="text">
-                                {{ article.description }}
-                                <a href="{% url 'article_detail' slug=article.slug %}"><i class="icon-arrow-right2"></i></a>
-                            </p>
-                        </div>
-                        <div class="post-info">
-                            <div class="post-by">Post By <a href="{% url 'article_detail' slug=article.slug %}">{{ article.author }}</a></div>
-                            <div class="extra-info">
-                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}"
-                                    target="_blank" rel="noopener">
-                                    <i class="icon-facebook5"></i>
-                                </a>
-        
-                                <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ article.title|urlencode }}"
-                                    target="_blank" rel="noopener">
-                                    <i class="icon-twitter4"></i>
-                                </a>
-        
-                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri|urlencode }}"
-                                    target="_blank" rel="noopener">
-                                    <i class="icon-linkedin2"></i>
-                                </a>
-        
-                                <a href="{% url 'article_detail' slug=article.slug %}#comments">
-                                    {{ article.comments.count }} <i class="icon-bubble2"></i>
-                                </a>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </article>
-                {% endfor %}
-        
-                <div class="navigation">
-                    {% if page_obj.has_previous %}
-                        <a href="?page={{ page_obj.previous_page_number }}" class="prev">
-                            <i class="icon-arrow-left8"></i> Previous Posts
+            <!-- ARTICLE 1 -->
+
+            {% for article in page_obj %}
+            <article>
+                {% if article.image_url %}
+                <div class="{{article.title}}">
+                    <img src="{{article.image_url}}" style="border-radius:10px 10px 0 0; border: 1px">
+
+                </div>
+                {% endif %}
+                <div class="post-text">
+                    <span class="date">{{ article.published_at }}</span>
+                    <h2><a href="{% url 'article_detail' slug=article.slug %}">{{ article.title }}</a></h2>
+                    <p class="text">{{ article.description }}
+                        <a href="{% url 'article_detail' slug=article.slug %}"><i class="icon-arrow-right2"></i></a>
+                    </p>
+                </div>
+                <div class="post-info">
+                    <div class="post-by">Post By <a
+                            href="{% url 'article_detail' slug=article.slug %}">{{article.author}}</a></div>
+                    <div class="extra-info">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}"
+                            target="_blank" rel="noopener">
+                            <i class="icon-facebook5"></i>
                         </a>
-                    {% endif %}
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}" class="next">
-                            Next Posts <i class="icon-arrow-right8"></i>
+
+                        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ article.title|urlencode }}"
+                            target="_blank" rel="noopener">
+                            <i class="icon-twitter4"></i>
                         </a>
-                    {% endif %}
+
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri|urlencode }}"
+                            target="_blank" rel="noopener">
+                            <i class="icon-linkedin2"></i>
+                        </a>
+
+                        <a href="{% url 'article_detail' slug=article.slug %}#comments">
+                            {{ article.comments.count }} <i class="icon-bubble2"></i>
+                        </a>
+                    </div>
+
                     <div class="clearfix"></div>
                 </div>
-        
-                {% else %}
-                <p style="font-size: 24px; color: #999; margin-top: 50px;">No articles found in this category yet!</p>
-            
-                <a href="{% url 'home' %}" style="
-                    display: inline-block;
-                    margin-top: 20px;
-                    padding: 10px 20px;
-                    background-color: #007bff;
-                    color: white;
-                    border-radius: 5px;
-                    text-decoration: none;
-                    font-size: 18px;
-                    transition: background-color 0.3s ease;
-                " 
-                onmouseover="this.style.backgroundColor='#0056b3'" 
-                onmouseout="this.style.backgroundColor='#007bff'">
-                    ← Back to Home
+            </article>
+            {% endfor %}
+
+            <div class="navigation">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="prev">
+                    <i class="icon-arrow-left8"></i> Previous
                 </a>
-            {% endif %}
-            
-        
-        </div>        
-    </div>
+                {% endif %}
 
-    <div class="clearfix"></div>
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="next">
+                    Next <i class="icon-arrow-right8"></i>
+                </a>
+                {% endif %}
+                <div class="clearfix"></div>
+            </div>
+        </div>
 
-</section>
-{% endblock %}
 
+        <div class="clearfix"></div>
 
+    </section>
+    {% endblock %}
+
+</body>
 
