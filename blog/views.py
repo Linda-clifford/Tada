@@ -6,8 +6,13 @@ from blog.scripts.scrape_articles import scrape_and_save_full_content
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from random import sample
 from django.db.models import Q
-from .forms import CommentForm
+from .forms import CommentForm, ContactForm
 from random import sample
+from django.http import Http404
+from django.http import HttpResponseNotFound
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib import messages
 
 
 def home(request):
@@ -15,7 +20,7 @@ def home(request):
     articles_list = Article.objects.filter(status='published').order_by('-published_at')
 
     tags = Tag.objects.all()
-    paginator = Paginator(articles_list, 8)  # Show 10 articles per page
+    paginator = Paginator(articles_list, 6)  # Show 10 articles per page
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -157,6 +162,7 @@ def tag_detail(request, slug):
     })
 
 
+
 def search_articles(request):
     query = request.GET.get('q')
     results = Article.objects.none()
@@ -164,9 +170,12 @@ def search_articles(request):
     if query:
         results = Article.objects.filter(
             title__icontains=query
-        ).order_by('-published_at')  # you can expand search fields as needed
+        ).order_by('-published_at')
 
-    paginator = Paginator(results, 6)  # 6 results per page
+    if not results.exists():
+        return HttpResponseNotFound(render(request, 'blog/404.html'))
+
+    paginator = Paginator(results, 6)
     page = request.GET.get('page')
 
     try:
@@ -179,11 +188,31 @@ def search_articles(request):
     context = {
         'query': query,
         'page_obj': page_obj,
-        "request": request,
     }
 
     return render(request, 'blog/search_results.html', context)
 
+
+def contact(request):
+    form = ContactForm()
+
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = f"New Contact Message from {form.cleaned_data['name']}"
+            message = form.cleaned_data['message']
+            sender = form.cleaned_data['email']
+            recipients = [settings.DEFAULT_FROM_EMAIL]  # This sends to you
+
+            try:
+                send_mail(subject, message, sender, recipients)
+                messages.success(request, "Your message was sent successfully!")
+                return redirect('contact')
+            except Exception as e:
+                print(f"Email send failed: {e}")
+                messages.error(request, "Oops! Something went wrong. Try again later.")
+
+    return render(request, 'blog/contact.html', {'form': form})
 
 
 def privacy_policy(request):

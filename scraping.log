@@ -180,3 +180,199 @@ Traceback (most recent call last):
 django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'localhost:9000'. You may need to add 'localhost' to ALLOWED_HOSTS.
 2025-07-05 22:57:55,524 - WARNING - Bad Request: /favicon.ico
 2025-07-05 22:58:55,840 - INFO - /home/steve/Templates/django/test_project/settings.py changed, reloading.
+2025-07-08 02:19:59,521 - WARNING - Not Found: /img/about-me.jpg
+2025-07-08 02:20:00,484 - WARNING - Not Found: /img/favicon.png
+2025-07-08 02:20:05,212 - WARNING - Not Found: /img/about-me.jpg
+2025-07-08 02:21:50,180 - WARNING - Not Found: /img/about-me.jpg
+2025-07-08 02:21:58,840 - WARNING - Not Found: /img/about-me.jpg
+2025-07-08 02:24:51,066 - WARNING - Not Found: /img/about-me.jpg
+2025-07-08 02:24:55,376 - WARNING - Not Found: /img/about-me.jpg
+2025-07-08 02:26:36,880 - WARNING - Not Found: /img/about-me.jpg
+2025-07-08 02:30:55,558 - WARNING - Not Found: /img/about-me.jpg
+2025-07-08 02:32:52,627 - INFO - /home/steve/Templates/Tada/blog/views.py changed, reloading.
+2025-07-08 03:02:14,323 - INFO - /home/steve/Templates/Tada/blog/views.py changed, reloading.
+2025-07-08 03:04:57,594 - ERROR - Internal Server Error: /search/
+Traceback (most recent call last):
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/Templates/Tada/blog/views.py", line 173, in search_articles
+    return HttpResponseNotFound(render(request, 'blog/404.html'))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/loader_tags.py", line 295, in do_extends
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 518, in parse
+    raise self.error(token, e)
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/loader_tags.py", line 228, in do_block
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: 'block' tag with name 'content' appears more than once
+2025-07-08 03:04:57,689 - WARNING - Not Found: /favicon.ico
+2025-07-08 03:05:56,256 - WARNING - Not Found: /search/
+2025-07-08 03:34:59,733 - WARNING - Not Found: /articles/elon-musks-luck-runs-out/}
+2025-07-08 03:57:44,964 - WARNING - Forbidden (CSRF token missing.): /articles/elon-musks-luck-runs-out/
+2025-07-08 03:58:25,141 - WARNING - Forbidden (CSRF token missing.): /articles/elon-musks-luck-runs-out/
+2025-07-08 04:05:44,431 - WARNING - Not Found: /articles/netflix-is-raising-its-prices-heres-how-much-youll-pay-alcom/}
+2025-07-08 04:07:50,618 - WARNING - Not Found: /articles/marvel-snap-is-now-banned-in-the-us-a-bizarre-link-to-the-tiktok-shutdown-forbes/}
+2025-07-08 04:13:25,674 - ERROR - Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/Templates/Tada/blog/views.py", line 29, in home
+    return render(request, 'blog/home.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for '#' not found. '#' is not a valid view function or pattern name.
+2025-07-08 04:13:51,671 - ERROR - Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/Templates/Tada/blog/views.py", line 29, in home
+    return render(request, 'blog/home.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/steve/.local/share/virtualenvs/Tada-mI4KyVmk/lib/python3.12/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for '' not found. '' is not a valid view function or pattern name.
+2025-07-08 04:32:24,197 - INFO - /home/steve/Templates/Tada/blog/forms.py changed, reloading.
+2025-07-08 04:35:08,258 - INFO - /home/steve/Templates/Tada/test_project/settings.py changed, reloading.
+2025-07-08 04:37:30,566 - INFO - /home/steve/Templates/Tada/test_project/settings.py changed, reloading.
+2025-07-08 04:38:55,948 - INFO - /home/steve/Templates/Tada/blog/views.py changed, reloading.
+2025-07-08 04:42:48,177 - INFO - /home/steve/Templates/Tada/blog/urls.py changed, reloading.
+2025-07-08 09:21:39,248 - INFO - /home/steve/Templates/Tada/test_project/settings.py changed, reloading.
+2025-07-08 09:35:42,557 - WARNING - Not Found: /favicon.ico

@@ -2,36 +2,44 @@
 {% load static %}
 {% load custom_filters %}
 {% block title %}Tada | Privacy-Policy{% endblock %}
-
-{% block content %}
-<section class="tada page" style="text-align: center; margin: 100px 0;">
-
-    <!-- *** CONTENT *** -->
-
-    <div>
-
-        <!-- ARTICLE 1 -->
-
-        <article>
-            <div>
-                <h2 class="text-2xl font-bold mb-4" style="margin: 40px 0;">Privacy Policy</h2>
-            </div>
-            <div >
-                <p class="mb-2" style="font-size: large;">Your privacy is important to us. This policy explains how we handle your data...</p>
-                <p style="font-size: large;">We do not collect personal information unless explicitly provided by you. Cookies may be used to enhance your experience.</p>
-                <p style="font-size: large;">If you have any questions, contact us at <a href="mailto:tadablog@gmail.com" class="text-blue-500 underline">tadablog@gmail.com</a>.</p>
-                <div class="clearfix"></div>
-
-            </div>
-
-        </article>
-
-    </div>
-
-
-    <div class="clearfix"></div>
-
-</section>
+{% block meta_description %}
+<meta name="description" content="Read Tada's privacy policy to understand how we collect, use, and protect your personal information on our platform.">
 {% endblock %}
 
+{% block content %}
 
+<main>
+    <div class="container">
+      <div class="col-md-12 col-lg-12">
+        <div class="single-post single-post--fullsize">
+            <div class="category-title">
+                <h1>Privacy - Policy</h1>
+            </div>
+          <div class="single-post__content">
+            <p>At <strong>Tada</strong>, we value your privacy and are committed to protecting your personal information. This policy outlines how we collect, use, and safeguard your data.</p>
+  
+            <h4><strong><span style="text-decoration: underline;">Information We Collect</span></strong></h4>
+            <p>We may collect personal information such as your name and email address when you use our contact form or subscribe to our content.</p>
+  
+            <h4><strong><span style="text-decoration: underline;">How We Use Your Information</span></strong></h4>
+            <p>Your information is used only to respond to inquiries, provide updates, and improve your experience on our site. We do not sell or share your data with third parties.</p>
+  
+            <h4><strong><span style="text-decoration: underline;">Cookies</span></strong></h4>
+            <p>We use cookies to enhance your browsing experience. You can disable cookies in your browser settings at any time.</p>
+  
+            <h4><strong><span style="text-decoration: underline;">Third-Party Links</span></strong></h4>
+            <p>Our site may contain links to external websites. We are not responsible for the content or privacy practices of those sites.</p>
+  
+            <h4><strong><span style="text-decoration: underline;">Your Consent</span></strong></h4>
+            <p>By using our website, you consent to our privacy policy.</p>
+  
+            <h4><strong><span style="text-decoration: underline;">Changes</span></strong></h4>
+            <p>We may update this policy periodically. Check this page for the latest information.</p>
+  
+            <p>If you have any questions, contact us at <a href="mailto:support@tada.com">support@tada.com</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  {% endblock %}

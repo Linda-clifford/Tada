@@ -5,231 +5,254 @@
 {% load custom_filters %}
 <meta name="description" content="{{ article.content|truncatewords:30 }}">
 {% endblock %}
+{% block content %}
+<main>
+    <style>
+        /* Make images responsive */
+        .single-post__content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1rem auto;
+        }
 
+        /* Make videos responsive */
+        .single-post__content video,
+        .single-post__content iframe {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1rem auto;
+        }
 
-<style>
-    .comment-form {
-        margin-top: 2rem;
-        padding: 1.5rem;
-        background-color: #f9f9f9;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
+        /* Optional: make iframe like YouTube scale as 16:9 */
+        .single-post__content .responsive-video {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
 
-    .comment-form h3 {
-        margin-bottom: 1rem;
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-
-    .field-name {
-        display: block;
-        margin-top: 1rem;
-        margin-bottom: 0.3rem;
-        font-weight: 600;
-        font-size: 0.95rem;
-        color: #555;
-    }
-
-    .name,
-    .email,
-    .message {
-        width: 100%;
-        padding: 0.8rem 1rem;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 1rem;
-        margin-bottom: 1rem;
-        transition: border-color 0.3s;
-    }
-
-    .name:focus,
-    .email:focus,
-    .message:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-
-    button[type="submit"] {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 0.8rem 2rem;
-        font-size: 1rem;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    button[type="submit"]:hover {
-        background-color: #0056b3;
-    }
-</style>
-
-<body>
-
-    <!--******************************************************************************************************************************************
-    ****************************************************************** SECTION *******************************************************************
-    *******************************************************************************************************************************************-->
-    {% block content %}
-    <section class="tada-container content-posts post post-full-width">
-
-        <!-- *** CONTENT *** -->
-
-        <div class="content col-xs-12">
-            <!-- ARTICLE 1 -->
-            <article>
-
-                <div class="post-image">
-                    <img src="{{ article.image_url }}" alt="{{article.title}}">
+        .single-post__content .responsive-video iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <div class="container">
+        <div class="col-md-12  col-lg-12">
+            <div class="single-post  single-post--fullsize">
+                <div class="single-post__image">
+                    <img src="{{ article.image_url }}" alt="Cup Of Coffee On The Window Sill">
                 </div>
-
-                <div class="category">
-                    <a>{{ article|guess_category }}</a>
+                <div class="single-post__title">
+                    <h2>{{article.title}}</h2>
                 </div>
-
-                <div class="post-text">
-                    <span class="date">{{ article.published_at|date:"F j, Y, g:i a" }}</span>
-                    <h2>{{ article.title }}</h2>
+                <div class="single-post__info">
+                    <span>By <a>{{ article.author }}</a></span>
+                    <span>{{ article.published_at|date:"F j, Y" }}</span>
+                    <span><a >{{ comments.count }} Comment{{ comments.count|pluralize }}</a></span>
                 </div>
-
-                <div class="post-text text-content">
-                    <div class="post-by">Post By <a>{{ article.author }}</a></div>
-                    <div class="text">
-                        {{ article.content|safe }}
-                    </div>
-                    <div class="clearfix"></div>
+                <div class="single-post__content">
+                    {{ article.content|safe }}
                 </div>
-        </div>
-        </article>
-        </div>
-
-
-        <div class="clearfix"></div>
-
-
-        <div class="clearfix"></div>
-
-
-        <div class="related-posts">
-            <h2>Related Article</h2>
-            <div class="related-item-container">
-                {% for related in related_articles %}
-                <div class="related-item">
-                    <div class="related-image">
-                        <img src="{{ related.image_url|default:'https://via.placeholder.com/400x200?text=No+Image' }}">
-
-                    </div>
-                    <div class="related-text">
-                        <span class="related-date">{{ related.published_at|date:"d M Y" }}</span>
-                        <span class="related-title"><a href="{% url 'article_detail' slug=related.slug %}">{{related.title|truncatewords:8 }}</a></span>
-                    </div>
-                    <div class="related-author">
-                        Post by <a href="{% url 'article_detail' slug=related.slug %}">{{ related.author }}</a>
-                    </div>
-                </div>
-                {% empty %}
-                <p>No related articles found.</p>
-                {% endfor %}
-
-                <div class="clearfix"></div>
-
-            </div>
-        </div>
-
-        <div class="comments">
-            <h3>{{ comments.count }} Comment{{ comments.count|pluralize }}</h3>
-
-            {% for comment in comments %}
-            <div class="comments-list" id="comment-{{ comment.id }}">
-                <div class="main-comment">
-                    <div class="comment-image-author">
-                        <img src="{% static 'img/Profile_avatar_placeholder_large.png' %}">
-                    </div>
-                    <div class="comment-info">
-                        <div class="comment-name-date">
-                            <span class="comment-name">{{ comment.name }}</span>
-                            <span class="comment-date">{{ comment.created_at|date:"F j, Y" }}</span>
-                            <div class="clearfix"></div>
+                <div class="single-post__footer">
+                    <div class="single-post__footer-tags">
+                        <h3>Tags:</h3>
+                        <div class="single-post__footer-tags-list">
+                            {% for tag in article.tags.all %}
+                            <a href="{% url 'tag_detail' tag.slug %}">{{ tag.name }}</a>
+                            {% empty %}
+                            <span>No tags</span>
+                            {% endfor %}
                         </div>
-                        <span class="comment-description">
-                            {{ comment.body|linebreaks }}
-                            <a href="#" class="reply-btn" data-comment-id="{{ comment.id }}">
-                                <i class="icon-arrow-right2"></i> Reply
+                    </div>
+                    <div class="single-post__footer-social">
+                        <span>Share:</span>
+                        <div class="single-post__footer-social-icons">
+                            {% with request.build_absolute_uri as full_url %}
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ full_url }}" target="_blank">
+                                <svg>
+                                    <use xlink:href="#facebook"></use>
+                                </svg>
                             </a>
-                        </span>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-
-                <!-- Replies -->
-                {% for reply in comment.replies.all %}
-                <div class="reply-comment" id="comment-{{ reply.id }}">
-                    <span class="reply-line"></span>
-                    <div class="comment-image-author">
-                        <img src="{% static 'img/Profile_avatar_placeholder_large.png' %}">
-                    </div>
-                    <div class="comment-info">
-                        <div class="comment-name-date">
-                            <span class="comment-name">{{ reply.name }}</span>
-                            <span class="comment-date">{{ reply.created_at|date:"F j, Y" }}</span>
-                            <div class="clearfix"></div>
+                            <a href="https://twitter.com/intent/tweet?url={{ full_url }}&text={{ article.title }}"
+                                target="_blank">
+                                <svg>
+                                    <use xlink:href="#twitter"></use>
+                                </svg>
+                            </a>
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ full_url }}"
+                                target="_blank">
+                                <svg>
+                                    <use xlink:href="#google"></use>
+                                </svg>
+                            </a>
+                            <a href="https://pinterest.com/pin/create/button/?url={{ full_url }}&description={{ article.title }}"
+                                target="_blank">
+                                <svg>
+                                    <use xlink:href="#pinterest"></use>
+                                </svg>
+                            </a>
+                            <a href="mailto:?subject={{ article.title }}&body=Check this out: {{ full_url }}">
+                                <svg>
+                                    <use xlink:href="#email"></use>
+                                </svg>
+                            </a>
+                            {% endwith %}
                         </div>
-                        <span class="comment-description">
-                            <strong>Replying to @{{ reply.parent.name }}</strong><br>
-                            {{ reply.body|linebreaks }}
-                        </span>
                     </div>
-                    <div class="clearfix"></div>
+
                 </div>
-                {% endfor %}
+
+                <div class="single-post__related">
+                    <h2>Related Article</h2>
+                    {% for related in related_articles %}
+                    <div class="single-post__related-item">
+                        <a href="{% url 'article_detail' slug=related.slug %}">
+                            <img src="{{ related.image_url|default:'https://via.placeholder.com/400x200?text=No+Image' }}"
+                                alt="My Favorite Books on Creativity and Productivity">
+                            <h6>{{related.title|truncatewords:8 }}</h6>
+                        </a>
+                        <span>{{ related.published_at|date:"d M Y" }}</span>
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <div class="single-post__comments">
+                    <h5>{{ comments.count }} Comment{{ comments.count|pluralize }}</h5>
+                    <ul class="single-post__comments-list" id="comment-{{ comment.id }}">
+                        {% for comment in comments %}
+                        <li class="single-post__comments-item">
+
+                            <div class="single-post__comments-item-body">
+                                <div class="single-post__comments-item-avatar">
+                                    <img src="{% static 'img/Profile_avatar_placeholder_large.png' %}"
+                                        alt="Comment Author">
+                                </div>
+                                <div class="single-post__comments-item-right">
+                                    <div class="single-post__comments-item-reply">
+                                        <a href="#" class="reply-btn" data-comment-id="{{ comment.id }}">Reply</a>
+                                    </div>
+                                    <div class="single-post__comments-item-info">
+                                        <div class="single-post__comments-item-info-author">
+                                            <span>
+                                                <a>{{ comment.name }}</a>
+                                            </span>
+                                        </div>
+                                        <div class="single-post__comments-item-info-date">
+                                            <span>
+                                                <a>{{ comment.created_at|date:"F j, Y" }}</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="single-post__comments-item-post">
+                                        <p>{{ comment.body|linebreaks }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ul class="single-post__comments-children">
+                                {% for reply in comment.replies.all %}
+                                <div class="reply-comment" id="comment-{{ reply.id }}">
+                                    <li class="single-post__comments-item">
+                                        <div class="single-post__comments-item-body">
+                                            <div class="single-post__comments-item-avatar">
+                                                <img src="{% static 'img/Profile_avatar_placeholder_large.png' %}"
+                                                    alt="Comment Author">
+                                            </div>
+                                            <div class="single-post__comments-item-right">
+
+                                                <div class="single-post__comments-item-info">
+                                                    <div class="single-post__comments-item-info-author">
+                                                        <span>
+                                                            <a>{{ reply.name }}</a>
+                                                        </span>
+                                                    </div>
+                                                    <div class="single-post__comments-item-info-date">
+                                                        <span>
+                                                            <a>{{ reply.created_at|date:"F j, Y" }}</a>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="single-post__comments-item-post">
+                                                    <strong>Replying to @{{ reply.parent.name }}</strong><br>
+
+                                                    <p>{{ reply.body|linebreaks }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </div>
+                                {% endfor %}
+                            </ul>
+
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="single-post__comments-respond">
+                        <h5>Leave a Comment</h5>
+                        <div id="replyingTo" style="margin: 10px 0; font-weight: bold; display: none;"></div>
+                        <form method="post" id="replyForm">
+                            {% csrf_token %}
+                            <p class="single-post__comments-respond-author">
+                                <label for="author">Name*</label>
+                                {{ form.name }}
+                            </p>
+                            <p class="single-post__comments-respond-email">
+                                <label for="email-form">Email*</label>
+                                {{ form.email }}
+                            </p>
+                            <p class="single-post__comments-respond-comment">
+                                <label for="comment">Comment</label>
+                                {{ form.body }}
+                                <input type="hidden" name="parent" id="parentInput">
+                            </p>
+                            <p class="single-post__comments-respond-submit">
+                                <input id="submit" type="submit" name="submit" size="30" value="Post Comment">
+                            </p>
+                        </form>
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const replyButtons = document.querySelectorAll('.reply-btn');
+                            const parentInput = document.getElementById('parentInput');
+                            const messagePlaceholder = document.querySelector('textarea[name="body"]');
+                            const commentForm = document.getElementById('replyForm');
+                            const replyIndicator = document.getElementById('replyingTo');
+
+                            replyButtons.forEach(button => {
+                                button.addEventListener('click', function (e) {
+                                    e.preventDefault();
+                                    const commentId = this.dataset.commentId;
+                                    parentInput.value = commentId;
+
+                                    // Find the comment author's name
+                                    const authorName = this.closest('.single-post__comments-item-body')
+                                        .querySelector('.single-post__comments-item-info-author span')
+                                        .innerText;
+
+                                    // Set the placeholder
+                                    messagePlaceholder.placeholder = "Your reply to " + authorName;
+                                    messagePlaceholder.focus();
+
+                                    // ✅ Show "Replying to @Name" visibly
+                                    replyIndicator.innerText = "Replying to @" + authorName;
+                                    replyIndicator.style.display = "block";
+
+                                    // Scroll smoothly to the form
+                                    commentForm.scrollIntoView({ behavior: 'smooth' });
+                                });
+                            });
+                        });
+                    </script>
 
 
+                </div>
             </div>
-            {% empty %}
-            <p class="text-center">No comments yet. Be the first to comment!</p>
-            {% endfor %}
         </div>
-
-
-        <!-- Comment Form -->
-        <div class="comment-form">
-            <h3>Leave a Reply</h3>
-            <form method="post" id="replyForm">
-                {% csrf_token %}
-                <span class="field-name">Your Name (required)</span>
-                {{ form.name }}
-                <span class="field-name">Your Email (required)</span>
-                {{ form.email }}
-                <span class="field-name">Your Message</span>
-                {{ form.body }}
-                <input type="hidden" name="parent" id="parentInput">
-                <button type="submit">Send Comment</button>
-            </form>
-        </div>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const replyButtons = document.querySelectorAll('.reply-btn');
-                const parentInput = document.getElementById('parentInput');
-                const messagePlaceholder = document.querySelector('textarea[name="body"]');
-                const commentForm = document.getElementById('replyForm');
-
-                replyButtons.forEach(button => {
-                    button.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        const commentId = this.dataset.commentId;
-                        parentInput.value = commentId;
-                        messagePlaceholder.placeholder = "Your reply to " + this.closest('.comment-info').querySelector('.comment-name').innerText;
-                        messagePlaceholder.focus();
-
-                        commentForm.scrollIntoView({ behavior: 'smooth' });
-                    });
-                });
-            });
-        </script>
-
-    </section>
-    {% endblock %}
-
-</body>
+    </div>
+</main>
+{% endblock %}

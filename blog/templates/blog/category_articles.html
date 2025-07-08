@@ -4,91 +4,82 @@
 {% block title %}Tada | {{ category|title }} Articles{% endblock %}
 {% block meta_description %}
 <meta name="description"
-    content="Explore the latest articles in {{ category|title }}. Stay updated with trends and news in the {{ category|title }} world.">
+    content="Latest {{ category|title }} news articles and updates. Stay informed with our curated selection of {{ category|title }} stories.">
 {% endblock %}
 
-
-<body>
-
-    {% block content %}
-    <section class="tada-container content-posts">
-
-        <div class="page-header" style="text-align: center; margin: 40px 0;">
-            <h1 style="color: black;">{{ category|title }} Articles</h1>
-            <h4 style="color: #000;">Latest updates and stories related to {{ category|title }}</h4>
-        </div>
-
-        <!-- *** CONTENT *** -->
-
-        <div class="content col-xs-10" style="margin: 0 auto; float: none; text-align: center;">
-
-            <!-- ARTICLE 1 -->
-
+{% block content %}
+<main>
+    <div class="container">
+        <div class="col-md-12  container--list">
+            <div class="row">
+                <div class="category-title">
+                    <h1>{{ category|title }} Articles</h1>
+                </div>
+            </div>
             {% for article in page_obj %}
-            <article>
-                {% if article.image_url %}
-                <div class="{{article.title}}">
-                    <img src="{{article.image_url}}" style="border-radius:10px 10px 0 0; border: 1px">
-
-                </div>
-                {% endif %}
-                <div class="post-text">
-                    <span class="date">{{ article.published_at }}</span>
-                    <h2><a href="{% url 'article_detail' slug=article.slug %}">{{ article.title }}</a></h2>
-                    <p class="text">{{ article.description }}
-                        <a href="{% url 'article_detail' slug=article.slug %}"><i class="icon-arrow-right2"></i></a>
-                    </p>
-                </div>
-                <div class="post-info">
-                    <div class="post-by">Post By <a
-                            href="{% url 'article_detail' slug=article.slug %}">{{article.author}}</a></div>
-                    <div class="extra-info">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}"
-                            target="_blank" rel="noopener">
-                            <i class="icon-facebook5"></i>
-                        </a>
-
-                        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ article.title|urlencode }}"
-                            target="_blank" rel="noopener">
-                            <i class="icon-twitter4"></i>
-                        </a>
-
-                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri|urlencode }}"
-                            target="_blank" rel="noopener">
-                            <i class="icon-linkedin2"></i>
-                        </a>
-
-                        <a href="{% url 'article_detail' slug=article.slug %}#comments">
-                            {{ article.comments.count }} <i class="icon-bubble2"></i>
-                        </a>
+            <div class="blog-post  blog-post--list  blog-post--list--fullwidth">
+                <div class="row">
+                    <div class="col-sm-6  col-md-6  blog-post__image">
+                        <a href="{% url 'article_detail' slug=article.slug %}"><img src="{{article.image_url}}"
+                                alt="Cup Of Coffee On The Window Sill"></a>
                     </div>
+                    <div class="col-sm-6  col-md-6  blog-post__list-content">
+                        <div class="blog-post__info  blog-post__info--date">
+                            <span><a href="{% url 'article_detail' slug=article.slug %}">By -{{article.author}}</a></span>
 
-                    <div class="clearfix"></div>
+                            <span>{{ article.published_at| date:"F j, Y" }}</span>
+
+                            <span><a href="{% url 'article_detail' slug=article.slug %}#comments">{{ article.comments.count }} Comment{{comments.count|pluralize }}</a></span>
+                            
+
+                        </div>
+                        <div class="blog-post__title">
+                            <h2><a href="{% url 'article_detail' slug=article.slug %}">{{article.title}}</a></h2>
+                        </div>
+                        <div class="blog-post__content">
+                            <p>{{ article.description| truncatewords:18 }}</p>
+                        </div>
+                        <div class="blog-post__footer">
+                            <a class="blog-post__footer-link" href="{% url 'article_detail' slug=article.slug %}">Read more</a>
+                        </div>
+                    </div>
                 </div>
-            </article>
+            </div>
             {% endfor %}
 
-            <div class="navigation">
-                {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}" class="prev">
-                    <i class="icon-arrow-left8"></i> Previous
-                </a>
-                {% endif %}
+            <nav class="blog-pagination">
+                <ul class="blog-pagination__items">
 
-                {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}" class="next">
-                    Next <i class="icon-arrow-right8"></i>
-                </a>
-                {% endif %}
-                <div class="clearfix"></div>
-            </div>
+                    {# Previous Page link #}
+                    {% if page_obj.has_previous %}
+                    <li class="blog-pagination__item">
+                        <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                    {% endif %}
+
+                    {# Numbered page links #}
+                    {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="blog-pagination__item blog-pagination__item--active">
+                        <a>{{ num }}</a>
+                    </li>
+                    {% else %}
+                    <li class="blog-pagination__item">
+                        <a href="?q={{ query }}&page={{ num }}">{{ num }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {# Next Page link #}
+                    {% if page_obj.has_next %}
+                    <li class="blog-pagination__item">
+                        <a href="?q={{ query }}&page={{ page_obj.next_page_number }}">Next Page</a>
+                    </li>
+                    {% endif %}
+
+                </ul>
+            </nav>
         </div>
-
-
-        <div class="clearfix"></div>
-
-    </section>
-    {% endblock %}
-
-</body>
-
+    </div>
+</main>
+{% endblock %}

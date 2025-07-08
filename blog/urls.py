@@ -15,5 +15,6 @@ urlpatterns = [
     path('search/', views.search_articles, name='search_articles'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
+    path('contact-us/', views.contact, name='contact')
 
 ]

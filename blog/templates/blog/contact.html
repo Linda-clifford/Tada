@@ -1,0 +1,57 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block title %}Tada | Contact{% endblock %}
+{% block meta_description %}
+<meta name="description" content="Get in touch with Tada for questions, feedback, or collaboration. We're here to listen and respond promptly to your messages.">
+{% endblock %}
+
+{% block content %}
+<main>
+  <div class="container">
+    <div class="col-md-12  col-lg-12">
+      <div class="single-post  single-post--fullsize">
+        <div class="single-post__title  single-post__title--contact">
+          <h2>Contact</h2>
+        </div>
+        <div class="single-post__content  single-post__content--contact">
+          <p>We'd love to hear from you! Whether you have a question, suggestion, or just want to say hello — feel free to reach out using the form below. We aim to respond to all inquiries within 24–48 hours.
+
+            For press, business inquiries, or support, you can also contact us directly at:
+            📧 <a href="mailto:support@tada.com">support@tada.com</a>
+            📞 +123-456-789</p>
+        </div>
+
+        {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div class="single-post__contact">
+          <form method="post">
+            <p class="single-post__contact-author">
+              <label for="contact-author">Name*</label>
+              {{ form.name }}
+            </p>
+            <p class="single-post__contact-email">
+              <label for="contact-email">Email*</label>
+              {{ form.email }}
+            </p>
+            <p class="single-post__contact-message">
+              <label for="contact-message">Message</label>
+              {{ form.message }}            </p>
+            <p class="single-post__contact-submit">
+              <input id="contact-submit" type="submit" name="contact-submit" size="30" value="Send">
+            </p>
+            <br>
+          </form>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

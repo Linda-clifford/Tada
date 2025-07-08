@@ -7,161 +7,152 @@
 {% endblock %}
 
 
-<body>
+{% block content %}
+<main>
+  <div class="container">
+    <div class="col-md-8  col-lg-9  container--list">
+      {% for article in page_obj %}
+      <div class="blog-post  blog-post--list">
+        <div class="row">
+          <div class="col-sm-6  col-md-6  blog-post__image">
+            <a href="{% url 'article_detail' slug=article.slug %}"><img src="{{article.image_url}}"
+                alt="Cup Of Coffee On The Window Sill"></a>
+          </div>
+          <div class="col-sm-6  col-md-6  blog-post__list-content">
+            <div class="blog-post__info  blog-post__info--date">
+              <span><a href="{% url 'article_detail' slug=article.slug %}">By {{article.author}}</a></span>
 
-    {% block content %}
-    <section class="tada-container content-posts">
-
-        <!-- *** CONTENT *** -->
-
-        <div class="content col-xs-8">
-
-            <!-- ARTICLE 1 -->
-            {% for article in page_obj %}
-            <article>
-                {% if article.image_url %}
-                <div class="{{article.title}}">
-                    <img src="{{article.image_url}}">
-
-                </div>
-                {% endif %}
-                <div class="post-text">
-                    <span class="date">{{ article.published_at }}</span>
-                    <h2><a href="{% url 'article_detail' slug=article.slug %}">{{ article.title }}</a></h2>
-                    <p class="text">{{ article.description }}
-                        <a href="{% url 'article_detail' slug=article.slug %}"><i class="icon-arrow-right2"></i></a>
-                    </p>
-                </div>
-                <div class="post-info">
-                    <div class="post-by">Post By <a
-                            href="{% url 'article_detail' slug=article.slug %}">{{article.author}}</a></div>
-                    <div class="extra-info">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}"
-                            target="_blank" rel="noopener">
-                            <i class="icon-facebook5"></i>
-                        </a>
-
-                        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ article.title|urlencode }}"
-                            target="_blank" rel="noopener">
-                            <i class="icon-twitter4"></i>
-                        </a>
-
-                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri|urlencode }}"
-                            target="_blank" rel="noopener">
-                            <i class="icon-linkedin2"></i>
-                        </a>
-
-                        <a href="{% url 'article_detail' slug=article.slug %}#comments">
-                            {{ article.comments.count }} <i class="icon-bubble2"></i>
-                        </a>
-                    </div>
-
-                    <div class="clearfix"></div>
-                </div>
-            </article>
-            {% endfor %}
-
-
-            <div class="navigation">
-                {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}" class="prev">
-                    <i class="icon-arrow-left8"></i> Previous
-                </a>
-                {% endif %}
-
-                {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}" class="next">
-                    Next <i class="icon-arrow-right8"></i>
-                </a>
-                {% endif %}
-                <div class="clearfix"></div>
+              <span>{{ article.published_at| date:"F j, Y" }}</span>
+              <span><a href="{% url 'article_detail' slug=article.slug %}#comments">{{ article.comments.count }} Comment{{comments.count|pluralize }}</a></span>
             </div>
-
-
+            <div class="blog-post__title">
+              <h2><a href="{% url 'article_detail' slug=article.slug %}">{{ article.title |truncatewords:12 }}</a></h2>
+            </div>
+            <div class="blog-post__content">
+              <p>{{ article.description| truncatewords:18 }}</p>
+            </div>
+            <div class="blog-post__footer">
+              <a class="blog-post__footer-link" href="{% url 'article_detail' slug=article.slug %}">Read more</a>
+            </div>
+          </div>
         </div>
+      </div>
+      {% endfor %}
 
-        <!-- *** SIDEBAR *** -->
+      <nav class="blog-pagination">
+        <ul class="blog-pagination__items">
 
-        <div class="sidebar col-xs-4">
+          {# Previous Page link #}
+          {% if page_obj.has_previous %}
+          <li class="blog-pagination__item">
+            <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}">Previous</a>
+          </li>
+          {% endif %}
 
-            <!-- ABOUT ME -->
+          {# Numbered page links #}
+          {% for num in page_obj.paginator.page_range %}
+          {% if page_obj.number == num %}
+          <li class="blog-pagination__item blog-pagination__item--active">
+            <a>{{ num }}</a>
+          </li>
+          {% else %}
+          <li class="blog-pagination__item">
+            <a href="?q={{ query }}&page={{ num }}">{{ num }}</a>
+          </li>
+          {% endif %}
+          {% endfor %}
 
-            <div class="widget about-me">
-                <div class="ab-image">
-                    <img src="{% static 'img/about-me.jpg' %}" alt="about me">
-                    <div class="ab-title">About Me</div>
-                </div>
-                <div class="ad-text">
-                    <p>Curated stories, thoughtful ideas, and inspiration for curious minds. This blog explores everyday
-                        moments, creativity, and the beauty of slowing down to think, feel, and write.</p>
-                    <span class="signing"><img src="{% static 'img/signing.png' %}" alt="signing"></span>
-                </div>
+          {# Next Page link #}
+          {% if page_obj.has_next %}
+          <li class="blog-pagination__item">
+            <a href="?q={{ query }}&page={{ page_obj.next_page_number }}">Next Page</a>
+          </li>
+          {% endif %}
+
+        </ul>
+      </nav>
+
+    </div>
+    <div class="col-md-4  col-lg-3">
+      <div class="sidebar-widget">
+        <h3>About Me</h3>
+        <div class="sidebar-widget__about-me">
+          <div class="sidebar-widget__about-me-image">
+            <img src="{% static 'img/about-me.jpg' %}" alt="About Me">
+          </div>
+          <p>Curated stories, thoughtful ideas, and inspiration for curious minds. This blog explores everyday
+            moments, creativity, and the beauty of slowing down to think, feel, and write.</p>
+        </div>
+      </div>
+      <div class="sidebar-widget">
+        <h3>Follow Me</h3>
+        <div class="sidebar-widget__follow-me">
+          <div class="sidebar-widget__follow-me-icons">
+            <a>
+              <svg>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#facebook"></use>
+              </svg>
+            </a>
+            <a>
+              <svg>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#twitter"></use>
+              </svg>
+            </a>
+            <a>
+              <svg>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#google"></use>
+              </svg>
+            </a>
+            <a>
+              <svg>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#pinterest"></use>
+              </svg>
+            </a>
+            <a>
+              <svg>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#instagram"></use>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar-widget">
+        <div class="sidebar-widget__banner">
+          <a href=""><img src="{% static 'img/img3.jpg' %}" alt="Banner"></a>
+        </div>
+      </div>
+      <div class="sidebar-widget">
+        <h3>Popular Posts</h3>
+        <div class="sidebar-widget__popular">
+          {% for post in latest_posts %}
+          <div class="sidebar-widget__popular-item">
+            <div class="sidebar-widget__popular-item-image">
+              <a href="{% url 'article_detail' slug=post.slug %}"><img src="{{ post.image_url }}"
+                  alt="Flower Bedroom Ideas"></a>
             </div>
-
-            <!-- LATEST POSTS -->
-
-            <div class="widget latest-posts">
-                <h3 class="widget-title">
-                    Latest Posts
-                </h3>
-
-                <div class="posts-container">
-
-                    {% for post in latest_posts %}
-                    <div class="item">
-                        <img src="{{ post.image_url }}" alt="post 2" class="post-image">
-                        <br>
-                        <div class="info-post">
-                            <h5><a href="{% url 'article_detail' slug=post.slug %}">{{ post.title|truncatewords:5 }}</a>
-                            </h5>
-                            <span class="date">{{ post.published_at}}</span>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    {% endfor %}
-
-                    <div class="clearfix"></div>
-                </div>
+            <div class="sidebar-widget__popular-item-info">
+              <div class="sidebar-widget__popular-item-date">
+                <span>{{ article.published_at| date:"F j, Y" }}</span>
+              </div>
+              <div class="sidebar-widget__popular-item-content">
+                <a href="{% url 'article_detail' slug=post.slug %}">{{ post.title|truncatewords:5 }}</a>
+              </div>
             </div>
-
-            <!-- NEWSLETTER -->
-                              
-            <div class="widget newsletter">
-            	<h3 class="widget-title">
-                	Contact Us
-                </h3>
-            	<div class="newsletter-container">
-					<h4 style="font-weight: 400; font-size: medium;">Have a feature idea?</h4>
-                    <p style="font-weight: 600;">We'd love to hear it! Email us at  
-                        <a href="mailto:tadablog@gmail.com" class="text-blue-600 hover:underline">tadablog@gmail.com</a>.
-                    </p>
-                </div>
-            	<div class="clearfix"></div>
-            </div>  
-
-            <!-- TAGS -->
-
-            <div class="widget tags">
-                <h3 class="widget-title">
-                    Tags
-                </h3>
-                <div class="tags-container">
-                    {% for tag in tags %}
-                    <a href="{% url 'tag_detail' slug=tag.slug %}">{{ tag.name }}</a>
-                    {% empty %}
-                    <p>No tags available.</p>
-                    {% endfor %}
-                </div>
-
-                <div class="clearfix"></div>
-            </div>
-
-
-        </div> <!-- #SIDEBAR -->
-
-        <div class="clearfix"></div>
-
-    </section>
-    {% endblock %}
-
-</body>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="sidebar-widget">
+        <h3>Tag Cloud</h3>
+        <div class="sidebar-widget__tag-cloud">
+          {% for tag in tags %}
+          <a href="{% url 'tag_detail' slug=tag.slug %}">{{ tag.name }}</a>
+          {% empty %}
+          <p>No tags available.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

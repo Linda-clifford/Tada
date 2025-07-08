@@ -8,90 +8,78 @@
 {% endblock %}
 
 {% block content %}
+<main>
+    <div class="container">
+        <div class="col-md-12  container--list">
+            <div class="row">
+                <div class="category-title">
+                    <h1>Search Results for "{{ query }}"</h1>
+                </div>
+            </div>
+            {% for article in page_obj %}
+            <div class="blog-post  blog-post--list  blog-post--list--fullwidth">
+                <div class="row">
+                    <div class="col-sm-6  col-md-6  blog-post__image">
+                        <a href="{% url 'article_detail' slug=article.slug %}"><img src="{{article.image_url}}"
+                                alt="Cup Of Coffee On The Window Sill"></a>
+                    </div>
+                    <div class="col-sm-6  col-md-6  blog-post__list-content">
+                        <div class="blog-post__info  blog-post__info--date">
+                            <span><a href="{% url 'article_detail' slug=article.slug %}">By -{{article.author}}</a></span>
+
+                            <span>{{ article.published_at| date:"F j, Y" }}</span>
+
+                            <span><a href="{% url 'article_detail' slug=article.slug %}#comments">{{ article.comments.count }} Comment{{comments.count|pluralize }}</a></span>
 
 
-
-<section class="tada-container content-posts blog-2-columns">
-    
-    <div class="page-header" style="text-align: center; margin: 20px 0;">
-        <h2 style="color: black;">Search Results for "{{ query }}"</h2>
-    </div>
-
-    <div class="row">
-        <div class="content col-xs-10" style="margin: 0 auto; float: none; text-align: center;">
-
-            {% if page_obj %}
-                {% for article in page_obj %}
-                    <article>
-                        {% if article.image_url %}
-                            <div class="{{ article.title }}">
-                                <img src="{{ article.image_url }}" style="border-radius:10px 10px 0 0; border: 1px">
-                            </div>
-                        {% endif %}
-                        <div class="post-text">
-                            <span class="date">{{ article.published_at }}</span>
-                            <h2><a href="{% url 'article_detail' slug=article.slug %}">{{ article.title }}</a></h2>
-                            <p class="text">{{ article.description|truncatewords:25 }}
-                                <a href="{% url 'article_detail' slug=article.slug %}"><i class="icon-arrow-right2"></i></a>
-                            </p>                                 
                         </div>
-                        <div class="post-info">
-                            <div class="post-by">Post By <a href="{% url 'article_detail' slug=article.slug %}">{{ article.author }}</a></div>
-                            <div class="extra-info">
-                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}"
-                                    target="_blank" rel="noopener">
-                                    <i class="icon-facebook5"></i>
-                                </a>
-        
-                                <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ article.title|urlencode }}"
-                                    target="_blank" rel="noopener">
-                                    <i class="icon-twitter4"></i>
-                                </a>
-        
-                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri|urlencode }}"
-                                    target="_blank" rel="noopener">
-                                    <i class="icon-linkedin2"></i>
-                                </a>
-        
-                                <a href="{% url 'article_detail' slug=article.slug %}#comments">
-                                    {{ article.comments.count }} <i class="icon-bubble2"></i>
-                                </a>
-                            </div>
-                            <div class="clearfix"></div>
+                        <div class="blog-post__title">
+                            <h2><a href="{% url 'article_detail' slug=article.slug %}">{{article.title}}</a></h2>
                         </div>
-                    </article>
-                {% endfor %}
+                        <div class="blog-post__content">
+                            <p>{{ article.description| truncatewords:18 }}</p>
+                        </div>
+                        <div class="blog-post__footer">
+                            <a class="blog-post__footer-link" href="{% url 'article_detail' slug=article.slug %}">Read more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
 
-                <!-- Pagination Controls -->
-                <div class="navigation">
+            <nav class="blog-pagination">
+                <ul class="blog-pagination__items">
+
+                    {# Previous Page link #}
                     {% if page_obj.has_previous %}
-                        <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}" class="prev">
-                            <i class="icon-arrow-left8"></i> Previous
-                        </a>
+                    <li class="blog-pagination__item">
+                        <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
                     {% endif %}
-                
+
+                    {# Numbered page links #}
+                    {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="blog-pagination__item blog-pagination__item--active">
+                        <a>{{ num }}</a>
+                    </li>
+                    {% else %}
+                    <li class="blog-pagination__item">
+                        <a href="?q={{ query }}&page={{ num }}">{{ num }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {# Next Page link #}
                     {% if page_obj.has_next %}
-                        <a href="?q={{ query }}&page={{ page_obj.next_page_number }}" class="next">
-                            Next <i class="icon-arrow-right8"></i>
-                        </a>
+                    <li class="blog-pagination__item">
+                        <a href="?q={{ query }}&page={{ page_obj.next_page_number }}">Next Page</a>
+                    </li>
                     {% endif %}
-                
-                    <div class="clearfix"></div>
-                </div>
 
-            {% else %}
-                <div class="not-found" style="text-align: center; margin: 100px 0;">
-                    <h2>😕 No articles found for "{{ query }}"</h2>
-                    <h4 class="text">Try using different keywords or check back later.</h4>
-                    <a href="{% url 'home' %}" style="text-decoration: none;"> <i class="icon-arrow-right2"></i> Back to Home</a>
-                </div>
-            {% endif %}
-
+                </ul>
+            </nav>
         </div>
     </div>
-
-    <div class="clearfix"></div>
-
-</section>
-
+</main>
 {% endblock %}
