@@ -118,13 +118,12 @@ USE_I18N = True
 USE_TZ = True
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp-relay.brevo.com'
 EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'ethanthomaspotter388@gmail.com'
+EMAIL_HOST_USER = 'ethan@tadapost.us'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = 'ethanthomaspotter388@gmail.com'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'ethan@tadapost.us'
 
 
 # Static files (CSS, JavaScript, Images)

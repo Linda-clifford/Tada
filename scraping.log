@@ -505,3 +505,13 @@ Traceback (most recent call last):
     raise TemplateSyntaxError(
 django.template.exceptions.TemplateSyntaxError: 'block' tag with name 'footer_ads' appears more than once
 2025-07-09 01:16:54,320 - WARNING - Not Found: /favicon.ico
+2025-07-09 02:05:37,203 - INFO - /home/steve/Templates/Tada/test_project/settings.py changed, reloading.
+2025-07-09 02:21:25,354 - INFO - /home/steve/Templates/Tada/test_project/settings.py changed, reloading.
+2025-07-09 02:23:01,576 - WARNING - Not Found: /sw.js
+2025-07-09 02:24:38,022 - WARNING - Not Found: /sw.js
+2025-07-09 02:29:41,076 - INFO - /home/steve/Templates/Tada/test_project/settings.py changed, reloading.
+2025-07-09 02:30:00,713 - WARNING - Not Found: /sw.js
+2025-07-09 02:30:31,463 - WARNING - Not Found: /sw.js
+2025-07-09 02:31:14,212 - WARNING - Not Found: /sw.js
+2025-07-09 03:24:37,675 - INFO - /home/steve/Templates/Tada/test_project/settings.py changed, reloading.
+2025-07-09 03:27:51,308 - INFO - /home/steve/Templates/Tada/test_project/settings.py changed, reloading.
