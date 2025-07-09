@@ -35,6 +35,7 @@ def home(request):
         'active_nav': 'latest',
         'tags': tags,
         "request": request,
+        "show_ads": True
         })
 
 
@@ -90,6 +91,7 @@ def article_detail(request, slug):
         'form': form,
         'related_articles': related_articles,
         "request": request,
+        "show_ads": True,
     }
 
     # Pass the article data to the template

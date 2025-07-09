@@ -136,6 +136,8 @@
     </header>
     {% block content %}
     {% endblock %}
+    {% block footer_ads %}
+    {% endblock %}
     <footer class="page-footer">
         <div class="container page-footer__top">
           <div class="col-sm-5 col-md-5">
@@ -201,6 +203,12 @@
     <div class="content-overlay"></div>
     <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
+
+    {% block footer_ads %}
+    <div class="push-notification">
+      <script src="https://couphaithuph.net/act/files/tag.min.js?z=9547147" data-cfasync="false" async></script>
+    </div>
+    {% endblock %}
 </body>
 
 </html>
