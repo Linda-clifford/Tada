@@ -200,7 +200,7 @@ def contact(request):
 
     if request.method == 'POST':
         form = ContactForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and request.POST.get('consent'):
             subject = f"New Contact Message from {form.cleaned_data['name']}"
             message = form.cleaned_data['message']
             sender = form.cleaned_data['email']
