@@ -194,6 +194,7 @@ def search_articles(request):
 
     return render(request, 'blog/search_results.html', context)
 
+from django.core.mail import send_mail
 
 def contact(request):
     form = ContactForm()
@@ -203,11 +204,18 @@ def contact(request):
         if form.is_valid() and request.POST.get('consent'):
             subject = f"New Contact Message from {form.cleaned_data['name']}"
             message = form.cleaned_data['message']
-            sender = form.cleaned_data['email']
-            recipients = [settings.DEFAULT_FROM_EMAIL]  # This sends to you
+            sender = form.cleaned_data['email']  # user input
+            recipients = [settings.DEFAULT_FROM_EMAIL]  # goes to you
 
             try:
-                send_mail(subject, message, sender, recipients)
+                send_mail(
+                    subject,
+                    message,
+                    settings.DEFAULT_FROM_EMAIL,  # shows as FROM in your inbox
+                    recipients,
+                    fail_silently=False,
+                    headers={'Reply-To': sender}  # when you click "Reply", it replies to the user's email
+                )
                 messages.success(request, "Your message was sent successfully!")
                 return redirect('contact')
             except Exception as e:
@@ -215,6 +223,7 @@ def contact(request):
                 messages.error(request, "Oops! Something went wrong. Try again later.")
 
     return render(request, 'blog/contact.html', {'form': form})
+
 
 
 def privacy_policy(request):
