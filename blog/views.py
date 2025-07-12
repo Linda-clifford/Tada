@@ -10,7 +10,7 @@ from .forms import CommentForm, ContactForm
 from random import sample
 from django.http import Http404
 from django.http import HttpResponseNotFound
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.conf import settings
 from django.contrib import messages
 
@@ -205,17 +205,17 @@ def contact(request):
             subject = f"New Contact Message from {form.cleaned_data['name']}"
             message = form.cleaned_data['message']
             sender = form.cleaned_data['email']  # user input
-            recipients = [settings.DEFAULT_FROM_EMAIL]  # goes to you
+            recipient = settings.DEFAULT_FROM_EMAIL
 
             try:
-                send_mail(
+                email = EmailMessage(
                     subject,
                     message,
-                    settings.DEFAULT_FROM_EMAIL,  # shows as FROM in your inbox
-                    recipients,
-                    fail_silently=False,
+                    from_email = recipient,
+                    to = [recipient],
                     headers={'Reply-To': sender}  # when you click "Reply", it replies to the user's email
                 )
+                email.send(fail_silently=False)
                 messages.success(request, "Your message was sent successfully!")
                 return redirect('contact')
             except Exception as e:
