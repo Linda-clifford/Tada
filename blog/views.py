@@ -219,7 +219,8 @@ def contact(request):
                 messages.success(request, "Your message was sent successfully!")
                 return redirect('contact')
             except Exception as e:
-                print(f"Email send failed: {e}")
+                import traceback
+                print("Zoho SMTP error:", traceback.format_exc())
                 messages.error(request, "Oops! Something went wrong. Try again later.")
 
     return render(request, 'blog/contact.html', {'form': form})
