@@ -118,11 +118,11 @@ USE_I18N = True
 USE_TZ = True
 
 EMAIL_BACKEND = 'blog.backends.email_backend.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.zoho.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = 'ethanthomaspotter388@gmail.com'  # Your Gmail account (for sending)
+EMAIL_HOST_USER = 'ethan@tadapost.us'  # Your Gmail account (for sending)
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')# 16-digit app password, NOT your real Gmail password
 DEFAULT_FROM_EMAIL = 'ethan@tadapost.us'
 
