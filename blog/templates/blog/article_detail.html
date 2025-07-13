@@ -2,9 +2,10 @@
 {% load static %}
 {% block title %}{{ article.title }} | Tada{% endblock %}
 {% block meta_description %}
-{% load custom_filters %}
 <meta name="description" content="{{ article.content|truncatewords:30 }}">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
 {% endblock %}
+{% load custom_filters %}
 {% block content %}
 <main>
     <style>
