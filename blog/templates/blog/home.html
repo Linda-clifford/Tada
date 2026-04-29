@@ -29,7 +29,7 @@
               <span><a href="{% url 'article_detail' slug=article.slug %}">By {{article.author}}</a></span>
 
               <span>{{ article.published_at| date:"F j, Y" }}</span>
-              <span><a href="{% url 'article_detail' slug=article.slug %}#comments">{{ article.comments.count }}Comment{{comments.count|pluralize }}</a></span>
+              <span><a href="{% url 'article_detail' slug=article.slug %}#comments">{{ article.comments.count }} Comment{{comments.count|pluralize }}</a></span>
             </div>
             <div class="blog-post__title">
               <h2><a href="{% url 'article_detail' slug=article.slug %}">{{ article.title |truncatewords:12 }}</a></h2>

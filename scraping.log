@@ -515,3 +515,15 @@ django.template.exceptions.TemplateSyntaxError: 'block' tag with name 'footer_ad
 2025-07-09 02:31:14,212 - WARNING - Not Found: /sw.js
 2025-07-09 03:24:37,675 - INFO - /home/steve/Templates/Tada/test_project/settings.py changed, reloading.
 2025-07-09 03:27:51,308 - INFO - /home/steve/Templates/Tada/test_project/settings.py changed, reloading.
+2026-04-29 00:30:11,313 - WARNING - Not Found: /sw.js
+2026-04-29 00:40:07,710 - INFO - C:\Users\User\OneDrive\Documents\Tada\blog\views.py changed, reloading.
+2026-04-29 00:40:55,930 - WARNING - Not Found: /favicon.ico
+2026-04-29 00:45:32,119 - WARNING - Not Found: /sw.js
+2026-04-29 00:46:26,680 - WARNING - Not Found: /sw.js
+2026-04-29 00:46:39,138 - WARNING - Not Found: /sw.js
+2026-04-29 00:46:49,458 - WARNING - Not Found: /sw.js
+2026-04-29 00:47:06,233 - WARNING - Not Found: /search/
+2026-04-29 00:47:07,695 - WARNING - Not Found: /sw.js
+2026-04-29 00:48:52,940 - INFO - C:\Users\User\OneDrive\Documents\Tada\blog\views.py changed, reloading.
+2026-04-29 00:54:48,783 - INFO - C:\Users\User\OneDrive\Documents\Tada\test_project\settings.py changed, reloading.
+2026-04-29 02:02:43,503 - INFO - C:\Users\User\OneDrive\Documents\Tada\test_project\settings.py changed, reloading.
